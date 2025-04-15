@@ -43,5 +43,14 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
+
+        {{-- Tambahkan tombol register di bawah, di tengah --}}
+        @if (Route::has('register'))
+        <div class="flex items-center justify-center mt-4">
+            <a class="text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('register') }}">
+                    {{ __('Belum punya akun?') }}
+            </a>
+        </div>
+        @endif
     </form>
 </x-guest-layout>
