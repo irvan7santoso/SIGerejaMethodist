@@ -19,7 +19,7 @@
                         </div>
                         <div>
                             <label for="liturgos">Liturgos</label>
-                            <input type="text" name="liturgos" id="liturgos" class="w-full border-gray-300 rounded-md"
+                            <input type="text" name="liturgis" id="liturgis" class="w-full border-gray-300 rounded-md"
                                 required>
                         </div>
                         <div>
