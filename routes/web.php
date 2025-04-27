@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JadwalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\GerejaController;
@@ -14,7 +15,7 @@ Route::get('/dashboard', [GerejaController::class, 'index'])
 
 
 Route::middleware('auth')->group(function () {
-    // Route::get('/jadwal', [GerejaController::class, 'jadwal'])->name('jadwal.index');
+    Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
     Route::post('/gereja/jadwal', [GerejaController::class, 'simpanJadwal'])->name('gereja.jadwal.simpan');
     Route::post('/gereja/informasi', [GerejaController::class, 'simpanInformasi'])->name('gereja.informasi.simpan');
 
