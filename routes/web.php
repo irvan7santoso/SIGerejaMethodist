@@ -8,13 +8,13 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [GerejaController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/jadwal', [GerejaController::class, 'jadwal'])->name('jadwal.index');
+    // Route::get('/jadwal', [GerejaController::class, 'jadwal'])->name('jadwal.index');
     Route::post('/gereja/jadwal', [GerejaController::class, 'simpanJadwal'])->name('gereja.jadwal.simpan');
     Route::post('/gereja/informasi', [GerejaController::class, 'simpanInformasi'])->name('gereja.informasi.simpan');
 
