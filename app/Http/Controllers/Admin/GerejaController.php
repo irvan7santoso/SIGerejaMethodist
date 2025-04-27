@@ -9,11 +9,11 @@ use App\Http\Controllers\Controller;
 
 class GerejaController extends Controller
 {
-    public function jadwal()
+    public function index()
     {
         $jadwal = JadwalKebaktian::latest('tanggal')->get();
         $informasi = InformasiGereja::latest()->get();
-        return view('jadwal', compact('jadwal', 'informasi'));
+        return view('dashboard', compact('jadwal', 'informasi'));
     }
 
     public function simpanJadwal(Request $request)
