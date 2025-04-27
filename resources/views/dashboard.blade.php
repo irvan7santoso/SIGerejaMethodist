@@ -5,28 +5,28 @@
         </h2>
     </x-slot>
 
-    <div class="py-4">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-
-            <!-- Tombol Aksi -->
-            <div class="d-flex justify-content-end mb-3 gap-2">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahJadwalModal">
-                    <i class="bi bi-calendar-plus"></i> Tambah Jadwal Kebaktian
+    <div class="py-12">
+        <div class="container">
+            <div class="d-flex justify-content-end mb-3">
+                <!-- Tombol untuk membuka modal Tambah Jadwal -->
+                <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
+                    Tambah Jadwal Kebaktian
                 </button>
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#tambahInformasiModal">
-                    <i class="bi bi-megaphone"></i> Tambah Informasi Gereja
+                <!-- Tombol untuk membuka modal Tambah Informasi -->
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahInformasi">
+                    Tambah Informasi Gereja
                 </button>
             </div>
 
             <!-- Modal Tambah Jadwal Kebaktian -->
-            <div class="modal fade" id="tambahJadwalModal" tabindex="-1" aria-labelledby="tambahJadwalModalLabel"
+            <div class="modal fade" id="modalTambahJadwal" tabindex="-1" aria-labelledby="modalTambahJadwalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <form method="POST" action="{{ route('gereja.jadwal.simpan') }}">
                             @csrf
                             <div class="modal-header">
-                                <h5 class="modal-title" id="tambahJadwalModalLabel">Tambah Jadwal Kebaktian</h5>
+                                <h5 class="modal-title" id="modalTambahJadwalLabel">Tambah Jadwal Kebaktian</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Tutup"></button>
                             </div>
@@ -63,7 +63,7 @@
             </div>
 
             <!-- Modal Tambah Informasi Gereja -->
-            <div class="modal fade" id="tambahInformasiModal" tabindex="-1" aria-labelledby="tambahInformasiModalLabel"
+            <div class="modal fade" id="modalTambahInformasi" tabindex="-1" aria-labelledby="modalTambahInformasiLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -71,7 +71,7 @@
                             enctype="multipart/form-data">
                             @csrf
                             <div class="modal-header">
-                                <h5 class="modal-title" id="tambahInformasiModalLabel">Tambah Informasi Gereja</h5>
+                                <h5 class="modal-title" id="modalTambahInformasiLabel">Tambah Informasi Gereja</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Tutup"></button>
                             </div>
@@ -98,37 +98,69 @@
                 </div>
             </div>
 
-            <!-- Daftar Jadwal Kebaktian -->
-            <div class="card shadow-sm mb-4">
+            <!-- Daftar Jadwal Kebaktian dengan Tabel -->
+            <div class="card mb-4">
+                <div class="card-header">Jadwal Kebaktian</div>
                 <div class="card-body">
-                    <h5 class="card-title">Jadwal Kebaktian</h5>
-                    <ul class="list-group list-group-flush">
-                        @forelse ($jadwal as $j)
-                            <li class="list-group-item">
-                                <strong>{{ \Carbon\Carbon::parse($j->tanggal)->format('d M Y') }}</strong> -
-                                {{ $j->liturgos }}, {{ $j->pengkhotbah }}, {{ $j->pemusik }}, Kolektan: {{ $j->kolektan }}
-                            </li>
-                        @empty
-                            <li class="list-group-item">Belum ada jadwal kebaktian.</li>
-                        @endforelse
-                    </ul>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Liturgos</th>
+                                    <th scope="col">Pengkhotbah</th>
+                                    <th scope="col">Pemusik</th>
+                                    <th scope="col">Kolektan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($jadwal as $j)
+                                    <tr>
+                                        <td>{{ $j->tanggal }}</td>
+                                        <td>{{ $j->liturgis }}</td>
+                                        <td>{{ $j->pengkhotbah }}</td>
+                                        <td>{{ $j->pemusik }}</td>
+                                        <td>{{ $j->kolektan }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center">Belum ada jadwal kebaktian.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <!-- Daftar Informasi Gereja -->
-            <div class="card shadow-sm">
+            <!-- Daftar Informasi Gereja dengan Tabel -->
+            <div class="card">
+                <div class="card-header">Informasi Gereja</div>
                 <div class="card-body">
-                    <h5 class="card-title">Informasi Gereja</h5>
-                    <ul class="list-group list-group-flush">
-                        @forelse ($informasi as $info)
-                            <li class="list-group-item">
-                                <strong>{{ $info->judul }}</strong><br>
-                                {{ $info->isi }}
-                            </li>
-                        @empty
-                            <li class="list-group-item">Belum ada informasi.</li>
-                        @endforelse
-                    </ul>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Judul</th>
+                                    <th scope="col">Isi Informasi</th>
+                                    <th scope="col">Tanggal Diterbitkan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($informasi as $info)
+                                    <tr>
+                                        <td>{{ $info->judul }}</td>
+                                        <td>{{ \Str::limit($info->isi, 100) }}...</td>
+                                        <td>{{ $info->created_at->format('d M Y') }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center">Belum ada informasi gereja.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
